@@ -7,15 +7,15 @@ OBJS = obj/AboutDialog.o obj/MainWindow.o obj/Resource.o obj/WinMain.o
 WARNS = -Wall
 
 # Names of tools to use when building
-CC = gcc
-RC = windres
+CC = i686-w64-mingw32-gcc
+RC = i686-w64-mingw32-windres
 EXE = Win32App.exe
 
 # Compiler flags. Compile ANSI build only if CHARSET=ANSI.
 ifeq (${CHARSET}, ANSI)
-  CFLAGS = -O2 -std=c99 -D _WIN32_IE=0x0500 -D WINVER=0x0500 ${WARNS} -Iinclude
+	CFLAGS = -O2 -std=c99 -D _WIN32_IE=0x0500 -D WINVER=0x0500 ${WARNS} -Iinclude
 else
-  CFLAGS = -O2 -std=c99 -D UNICODE -D _UNICODE -D _WIN32_IE=0x0500 -D WINVER=0x0500 ${WARNS} -Iinclude
+	CFLAGS = -O2 -std=c99 -D UNICODE -D _UNICODE -D _WIN32_IE=0x0500 -D WINVER=0x0500 ${WARNS} -Iinclude
 endif
 
 # Linker flags
@@ -28,12 +28,10 @@ all: bin/${EXE}
 
 # Delete all build output
 clean:
-	if exist bin\${EXE}  del /q bin\${EXE}
-	if exist obj\*  del /q obj\*
-
+	rm -rf obj/* bin/*
 # Create build output directories if they don't exist
 bin obj:
-	@if not exist "$@" mkdir "$@"
+	 mkdir -p $@
 
 # Compile object files for executable
 obj/%.o: src/%.c | obj
